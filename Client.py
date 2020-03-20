@@ -1,14 +1,19 @@
 import socket
-import pickle
+
 sk = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-sk.connect((socket.gethostname(), 1024))
+sk.connect((socket.gethostname(), 1125))
 
 while True:
-    message_rcv = sk.recv(1024)
-    print(message_rcv.decode('utf-8'))
-    student_info = {
-        'MSSV': 17021300,
-        'Họ Tên': 'Nguyễn Ngọc Minh'
-    }
-    sk.send(pickle.dumps(student_info))
+    msg = sk.recv(1024)
+    print(msg.decode('utf-8'))
+    search = True
+    newStudent = True
+
+    while True:
+        if msg.decode('utf-8') == 'Kết nối server thành công':
+            student_id = input(f"Nhập MSSV: ")
+            sk.send(bytes(student_id, 'utf-8'))
+            new_msg = sk.recv(1024)
+            print(new_msg.decode('utf-8'))
+            newStudent = False
