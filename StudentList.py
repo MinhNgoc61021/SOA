@@ -17,7 +17,7 @@ student_list = [
     },
     {
         'ID': '17021306',
-        'Name': 'Phạm Công Name',
+        'Name': 'Phạm Công Nam',
         'Course': 'K62-CACLC2',
         'Phone number': '0969535735',
         'Email': '17021302@vnu.edu.vn',

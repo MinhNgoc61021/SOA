@@ -1,6 +1,6 @@
-import pickle
 import socket
 from StudentList import student_list
+import pickle
 
 # creates a socket object
 sk = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -9,6 +9,7 @@ sk = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sk.bind((socket.gethostname(), 1125))
 
 # enables a server to accept() connections
+# maximum of 5 connect requests
 sk.listen(5)
 newStudent = True
 
@@ -25,7 +26,9 @@ while True:
         print(student)
         if student['ID'] == str(student_id).strip():
             print('OK')
-            clientSocket.send(bytes('Sinh viên tồn tại', 'utf-8'))
+            msg = pickle.dumps(student)
+            clientSocket.send(msg)
             break
         else:
             print('Not OK')
+    clientSocket.close()
