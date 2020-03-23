@@ -24,3 +24,10 @@ student_list = [
         'Address': 'Hanoi, Vietnam'
     }
 ]
+
+
+def checkStudentExistence(ID):
+    for student in student_list:
+        if str(ID).strip() == student['ID']:
+            return student, True
+    return {}, False
