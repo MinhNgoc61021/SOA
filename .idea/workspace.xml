@@ -136,6 +136,11 @@
             </path>
             <path>
               <item name="RMI" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RMI" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RMI" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
             <path>
@@ -230,12 +235,12 @@
       <workItem from="1585363741437" duration="1335000" />
       <workItem from="1585365096461" duration="108000" />
       <workItem from="1585365225663" duration="13128000" />
-      <workItem from="1585379193583" duration="17181000" />
+      <workItem from="1585379193583" duration="17444000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32887000" />
+    <option name="totallyTimeSpent" value="33150000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
