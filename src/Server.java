@@ -6,7 +6,7 @@ import java.rmi.server.UnicastRemoteObject;
 import Student.*;
 
 public class Server implements StudentManagement {
-    StudentList studentList = new StudentList();
+    private StudentList studentList = new StudentList();
 
     @Override
     public String getStudentData(String StudentID) throws RemoteException {
@@ -24,6 +24,7 @@ public class Server implements StudentManagement {
     public static void main(String[] args) throws AlreadyBoundException, RemoteException {
         Server obj = new Server();
         StudentManagement stub = (StudentManagement) UnicastRemoteObject.exportObject(obj, 5000);
+
         Registry registry = LocateRegistry.getRegistry();
         registry.bind("StudentManagement", stub);
     }

@@ -8,7 +8,7 @@ public class Client {
     private Client() {};
 
     public static void main(String[] args) throws RemoteException, NotBoundException {
-        String studentID = JOptionPane.showInputDialog("Nhập vào MSSV: ", "Ô nhập");
+        String studentID = JOptionPane.showInputDialog("Nhập vào MSSV: ");
         Registry registry = LocateRegistry.getRegistry();
         StudentManagement stub = (StudentManagement) registry.lookup("StudentManagement");
         JOptionPane.showMessageDialog(null, stub.getStudentData(studentID));

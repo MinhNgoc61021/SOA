@@ -14,18 +14,18 @@ public class StudentList {
                 "17021300@vnu.edu.vn",
                 "Hanoi, Vietnam"));
 
-        studentList.add(new Student("17021300",
-                "Nguyễn Ngọc Minh",
+        studentList.add(new Student("17021304",
+                "Nguyễn Nam",
                 "K62-CACLC2",
                 "0969535735",
-                "17021300@vnu.edu.vn",
+                "17021304@vnu.edu.vn",
                 "Hanoi, Vietnam"));
 
-        studentList.add(new Student("17021300",
-                "Nguyễn Ngọc Minh",
+        studentList.add(new Student("17021306",
+                "Phạm Công Nam",
                 "K62-CACLC2",
                 "0969535735",
-                "17021300@vnu.edu.vn",
+                "17021306@vnu.edu.vn",
                 "Hanoi, Vietnam"));
 
     }
