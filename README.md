@@ -1,7 +1,6 @@
-# Socket
+# Java RMI 
 ## Nội dung yêu cầu
 - Sử dụng Java RMI (Java Remote Method Invocation) viết lại ứng dụng Socket.
-
 ## Thành viên nhóm
 | Họ tên | MSSV                                            |
 | ------ | ----------------------------------------------- |

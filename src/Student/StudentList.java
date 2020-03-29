@@ -27,6 +27,12 @@ public class StudentList {
                 "0969535735",
                 "17021306@vnu.edu.vn",
                 "Hanoi, Vietnam"));
+        studentList.add(new Student("17021307",
+                "Tên gì đó",
+                "K62-CACLC2",
+                "0969535735",
+                "17021307@vnu.edu.vn",
+                "Hanoi, Vietnam"));
 
     }
 

@@ -8,9 +8,17 @@ public class Client {
     private Client() {};
 
     public static void main(String[] args) throws RemoteException, NotBoundException {
-        String studentID = JOptionPane.showInputDialog("Nhập vào MSSV: ");
-        Registry registry = LocateRegistry.getRegistry();
-        StudentManagement stub = (StudentManagement) registry.lookup("StudentManagement");
-        JOptionPane.showMessageDialog(null, stub.getStudentData(studentID));
+        while (true) {
+            String studentID = JOptionPane.showInputDialog("Nhập: ");
+            if (studentID.matches("(.*)(^\\d{8}$)(.*)")) {
+                Registry registry = LocateRegistry.getRegistry();
+                StudentManagement stub = (StudentManagement) registry.lookup("StudentManagement");
+                JOptionPane.showMessageDialog(null, stub.getStudentData(studentID));
+            }
+            else if (studentID.replace(" ", "").matches("(.*)^(exit)(.*)")) {
+                break;
+            }
+        }
+
     }
 }
