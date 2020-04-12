@@ -1,7 +1,7 @@
 const request = require('request');
 const cheerio = require('cheerio');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
-const search = 'vsmart';
+const search = 'nokia';
 const productList = [];
 
 request(`https://www.thegioididong.com/tim-kiem?key=` + search , (error, response, html) => {
@@ -12,7 +12,7 @@ request(`https://www.thegioididong.com/tim-kiem?key=` + search , (error, respons
         product.productName = $(element).find('h3').text().trim();
         product.priceTag = $(element).find('strong').text().trim();
         product.productPromo = $(element).find('.promo').children('p').text().trim();
-        
+
         if (product.productName != '' && product.priceTag != '') {
           console.log(product)
           productList.push(product);
