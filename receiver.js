@@ -9,7 +9,7 @@ function Crawler(error, response, html) {
           film.title = $('.title_wrapper').children('h1').text();
           film.releaseDate = $('#titleYear').children('a').text();
           film.rating = $('.ratingValue').children('strong').children('span').attr('itemprop', 'ratingValue').text();
-          fs.appendFile('listSearch.csv', film , function (err) {
+          fs.appendFile(`/fileList/${film.title}.json`, film , function (err) {
             if (err) throw err;
             console.log('Updated!');
           });
