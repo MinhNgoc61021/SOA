@@ -11,7 +11,7 @@ function Crawler(error, response, html) {
           film.releaseDate = $('#titleYear').children('a').text().trim();
           film.rating = $('.ratingValue').children('strong').children('span').attr('itemprop', 'ratingValue').text().trim();
           console.log(film);
-          fs.writeFile(`filmList/${film.title}.json`, JSON.stringify(film) , function (err) {
+          fs.appendFile(`filmList/${film.title}.json`, JSON.stringify(film) , function (err) {
             if (err) throw err;
             console.log('Updated!');
           });
