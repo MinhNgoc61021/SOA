@@ -1,5 +1,5 @@
 # Web Crawler 
-- Crawler lấy thông tin về sản phẩm tìm kiếm trên TGDĐ
+- Crawler lấy thông tin về phim trên IMDB
 ## Thành viên nhóm
 | Họ tên | MSSV                                            |
 | ------ | ----------------------------------------------- |
