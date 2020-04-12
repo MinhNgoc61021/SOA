@@ -14,7 +14,7 @@ request(`https://www.thegioididong.com/tim-kiem?key=` + search , (error, respons
         product.productPromo = $(element).find('.promo').children('p').text().trim();
 
         if (product.productName != '' && product.priceTag != '') {
-          console.log(product)
+          // console.log(product)
           productList.push(product);
         }
       });
