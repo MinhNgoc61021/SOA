@@ -30,7 +30,7 @@ request(`https://www.thegioididong.com/tim-kiem?key=` + search , (error, respons
 
       csvWriter.writeRecords(productList)
                 .then(() => {
-                  console.log('BEBE');
+                  console.log('Done');
                 });
   }  
 });
