@@ -20,6 +20,7 @@ function crawler(error, response, html) {
           }
       }
 }
+
 async function receiver() {
     // Connect to the RabbitMQ server
     const connection = new Connection('amqp://localhost');
