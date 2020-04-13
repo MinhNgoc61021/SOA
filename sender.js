@@ -1,22 +1,28 @@
-var amqp = require('amqplib/callback_api');
+const { Connection } = require('amqplib-as-promised');
 
 const getMovieByIndex = (index) => {
   index += 137523;
   return `https://www.imdb.com/title/tt0${index}`;
 }
 
-// Connect to the RabbitMQ server
-amqp.connect('amqp://localhost', function(err, conn) {
- // Creating a channel, where the api for getting data
-  conn.createChannel(function(err, channel) {
-    // declaring the queue 
-    var queue = 'URL';
-    channel.assertQueue(queue, {durable: false});
-    for (var i = 0; i < 150; i++) {
-      var url= getMovieByIndex(i);
-      channel.sendToQueue(queue, Buffer.from(url));
-      console.log('Sent: ' + url);
-    };
-  });
-  // We close the connection and exit
-});
+async function sender() {
+  // Connect to the RabbitMQ server
+  const connection = new Connection('amqp://localhost');
+  await connection.init();
+  // createConfirmChannel
+  const channel = await connection.createChannel(); 
+  
+  // Create queue
+  var queue = 'URL';
+  await channel.assertQueue(queue, {durable: false});
+
+  for (var i = 0; i < 150; i++)  {
+    var url= getMovieByIndex(i);
+    await channel.sendToQueue(queue, Buffer.from(url));
+    console.log('Sent: ' + url);
+  }
+  await channel.close();
+  await connection.close();
+}
+
+sender();
