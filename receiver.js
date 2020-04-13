@@ -11,7 +11,7 @@ function crawler(error, response, html) {
           film.title = $('.title_wrapper').children('h1').text().trim();
           film.releaseDate = $('#titleYear').children('a').text().trim();
           film.rating = $('.ratingValue').children('strong').children('span').attr('itemprop', 'ratingValue').text().trim();
-          console.log(film);
+          // console.log(film);
           if (film.title != '') {
               fs.writeFile(`filmList/${film.title}.json`, JSON.stringify(film) , function (err) {
                 if (err) throw err;
@@ -32,8 +32,9 @@ async function receiver() {
     var queue = 'URL';
     await channel.assertQueue(queue, {durable: false});
     await channel.consume(queue, function(msg) {
+                    console.log(" Received: ", msg.content.toString());
                     var url = msg.content.toString();            
-                    request(url, Crawler);
+                    request(url, crawler);
                 }, { noAck: true });
 }
 
