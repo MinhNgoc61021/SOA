@@ -9,4 +9,5 @@
 ##  Viết bằng
 - Node.js
 ## Cách chạy
+- Cài Erlang -> RabbitMQ, sau đó chạy RabbitMQ
 - Terminal -> Gõ node sender -> Gõ node receiver
