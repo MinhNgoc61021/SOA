@@ -1,5 +1,5 @@
 # Web Crawler 
-- Crawler lấy thông tin về phim trên IMDB
+- Crawler sử dụng RabbitMQ lấy thông tin về phim trên IMDB 
 ## Thành viên nhóm
 | Họ tên | MSSV                                            |
 | ------ | ----------------------------------------------- |
@@ -9,4 +9,4 @@
 ##  Viết bằng
 - Node.js
 ## Cách chạy
-- Terminal -> Gõ node crawler
+- Terminal -> Gõ node sender -> Gõ node receiver
