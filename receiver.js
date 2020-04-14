@@ -36,7 +36,7 @@ async function receiver() {
                     console.log(" Received: ", msg.content.toString());
                     var url = msg.content.toString();            
                     request(url, crawler);
-                }, { noAck: true });
+                }, { noAck: false });
 }
 
 receiver();
