@@ -31,6 +31,7 @@ async function receiver() {
      // Create queue
     var queue = 'URL';
     await channel.assertQueue(queue, {durable: false});
+    console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", queue);
     await channel.consume(queue, function(msg) {
                     console.log(" Received: ", msg.content.toString());
                     var url = msg.content.toString();            
