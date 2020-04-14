@@ -14,8 +14,10 @@ function crawler(error, response, html) {
           // console.log(film);
           if (film.title != '') {
               fs.writeFile(`filmList/${film.title}.json`, JSON.stringify(film) , function (err) {
-                if (err) throw err;
-                console.log('Updated!');
+                if (err) {
+                    throw err; 
+                }
+                console.log('Crawled!');
               });
           }
       }
