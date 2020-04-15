@@ -39,7 +39,7 @@ async function receiver() {
     console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", queue);
     await channel.consume(queue, function(msg) {
                     var url = msg.content.toString(); 
-                    console.log(" Received: ", url);
+                    console.log("Received: ", url);
                     setTimeout(() => {
                         channel.ack(msg);
                         console.log('ack!');           
