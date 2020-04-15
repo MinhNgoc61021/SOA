@@ -21,7 +21,7 @@ async function sender() {
     var url= getMovieByIndex(i);
     await channel.sendToQueue(queue, Buffer.from(url), { persistent: true });
     // Message persistence tells RabbitMQ to save the message to the disk
-    // However not entirely since it will take a short time frame for RabbitMQ to confirm the message
+    // However not initially since it will take a short time frame for RabbitMQ to confirm the message
     console.log('Sent: ' + url);
   }
   await channel.close();
