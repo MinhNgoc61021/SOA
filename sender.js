@@ -23,6 +23,7 @@ async function sender() {
   }
   await channel.close();
   await connection.close();
+  process.exit(5);
 }
 
 sender();
