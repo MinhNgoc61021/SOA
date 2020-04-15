@@ -30,22 +30,28 @@ async function receiver() {
     // createConfirmChannel
     const channel = await connection.createChannel(); 
 
-     // Create queue
-    var queue = 'filmQueue';
-    await channel.assertQueue(queue, {durable: true});
+    // Create exchange
+    var exchange = 'filmURLs';
+    await channel.assertExchange(exchange, 'fanout', { durable: false });
+    
+    channel.assertQueue('', { 
+        exclusive: true 
+    }).then((q) => {
+        if (!q) {
+            throw err;
+        }
+        console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q.queue);
 
-    // the prefetch(1) method tells Rabbit to not dispatch a new message to receiver until receive acknowledged the prev one.
-    channel.prefetch(1);
-    console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", queue);
-    await channel.consume(queue, function(msg) {
-                    var url = msg.content.toString(); 
-                    console.log(" Received: ", url);
-                    setTimeout(() => {
-                        console.log('ack!');
-                        channel.ack(msg);           
-                        request(url, crawler);
-                    }, 1000);
-                }, { noAck: false });
+        channel.bindQueue(q.queue, exchange, '');
+        channel.consume(q.queue, (msg) => {
+            var url = msg.content.toString(); 
+            console.log(" Received: %s", url);
+            request(url, crawler);
+
+        }, {
+            noAck: true
+        });
+    });
 }
 
 receiver();
