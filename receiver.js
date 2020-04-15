@@ -41,8 +41,8 @@ async function receiver() {
                     var url = msg.content.toString(); 
                     console.log(" Received: ", url);
                     setTimeout(() => {
-                        console.log('ack!');
-                        channel.ack(msg);           
+                        channel.ack(msg);
+                        console.log('ack!');           
                         request(url, crawler);
                     }, 1000);
                 }, { noAck: false });
