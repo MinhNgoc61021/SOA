@@ -14,11 +14,11 @@ async function sender() {
   
   // Create queue
   var queue = 'URL';
-  await channel.assertQueue(queue, {durable: false});
+  await channel.assertQueue(queue, {durable: true});
 
   for (var i = 0; i < 150; i++)  {
     var url= getMovieByIndex(i);
-    await channel.sendToQueue(queue, Buffer.from(url));
+    await channel.sendToQueue(queue, Buffer.from(url), { persistent: true });
     console.log('Sent: ' + url);
   }
   await channel.close();
