@@ -15,6 +15,7 @@ function crawler(error, response, html) {
           if (film.title != '') {
               var fileName = film.title.trim().replace(/[<>:;%\$\s]+/g, '-');
               console.log();
+              // write to JSON file
               fs.writeFile(`filmList/${fileName}.json`, JSON.stringify(film) , function (err) {
                 if (err) {
                     throw err; 
