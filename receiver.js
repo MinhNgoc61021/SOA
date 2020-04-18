@@ -13,11 +13,13 @@ function crawler(error, response, html) {
           film.rating = $('.ratingValue').children('strong').children('span').attr('itemprop', 'ratingValue').text().trim();
           // console.log(film);
           if (film.title != '') {
-              fs.writeFile(`filmList/${film.title}.json`, JSON.stringify(film) , function (err) {
+              var fileName = film.title.trim().replace(/[<>:;%\$\s]+/g, '-');
+              console.log();
+              fs.writeFile(`filmList/${fileName}.json`, JSON.stringify(film) , function (err) {
                 if (err) {
                     throw err; 
                 }
-                console.log('Crawled!');
+                console.log('Crawled %s !', film.title.trim());
               });
           }
       }

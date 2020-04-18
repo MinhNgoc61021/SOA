@@ -17,7 +17,8 @@ async function sender() {
   await channel.assertQueue(queue, {durable: true}); 
   // Durability makes sure that even if RabbitMQ restarts, the queue wiil stay alive.
   
-  for (var i = 0; i < 150; i++)  {
+  // 20 films or how many if you want
+  for (var i = 0; i < 20; i++)  {
     var url= getMovieByIndex(i);
     await channel.sendToQueue(queue, Buffer.from(url), { persistent: true });
     // Message persistence tells RabbitMQ to save the message to the disk
