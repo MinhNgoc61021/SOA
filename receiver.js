@@ -6,15 +6,14 @@ const fs = require('fs');
 // crawler to get data 
 function crawler(error, response, html) {
       if (!error) {
+          // cheerio to get necessary data
           let $ = cheerio.load(html);
           var film = { title: '', releaseDate: '', rating: '' }
           film.title = $('.title_wrapper').children('h1').text().trim();
           film.releaseDate = $('#titleYear').children('a').text().trim();
           film.rating = $('.ratingValue').children('strong').children('span').attr('itemprop', 'ratingValue').text().trim();
-          // console.log(film);
           if (film.title != '') {
               var fileName = film.title.trim().replace(/[<>:;%\$\s]+/g, '-');
-              console.log();
               // write to JSON file
               fs.writeFile(`filmList/${fileName}.json`, JSON.stringify(film) , function (err) {
                 if (err) {
@@ -45,7 +44,7 @@ async function receiver() {
                     console.log("Received: ", url);
                     setTimeout(() => {
                         channel.ack(msg);
-                        console.log('ack!');           
+                        console.log('Acked!');           
                         request(url, crawler);
                     }, 1000);
                 }, { noAck: false });
