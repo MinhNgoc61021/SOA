@@ -1,4 +1,5 @@
 var amqp = require('amqplib/callback_api');
+const { Connection } = require('amqplib-as-promised');
 const request = require('request');
 const cheerio = require('cheerio');
 const fs = require('fs');
@@ -15,12 +16,14 @@ function crawler(error, response, html) {
           film.rating = $('.ratingValue').children('strong').children('span').attr('itemprop', 'ratingValue').text().trim();
           // console.log(film);
           if (film.title != '') {
-              fs.writeFile(`filmList/${film.title}.json`, JSON.stringify(film) , function (err) {
+            var title = film.title.trim().replace(/[<>:;%\$\s]+/g, '-');
+
+            fs.writeFile(`filmList/${title}.json`, JSON.stringify(film) , function (err) {
                 if (err) {
                     throw err; 
                 }
-                console.log('Crawled!');
-              });
+                console.log('Crawled %s !', film.title.trim());
+            });
           }
       }
 }
@@ -30,42 +33,40 @@ if (args.length == 0) {
     process.exit(1);
 }
 
-// Connect to the RabbitMQ server
-amqp.connect('amqp://localhost', function(error0, connection) {
-  if (error0) {
-    throw error0;
-  }
-  // createConfirmChannel
-  connection.createChannel(function(error1, channel) {
-    if (error1) {
-      throw error1;
-    }
-    // Create exchange
-    var exchange = 'filmURLs';
-    channel.assertExchange(exchange, 'direct', { durable: true });
+async function receiver() {
+    // Connect to the RabbitMQ server
+    const connection = new Connection('amqp://localhost');
+    await connection.init();
 
-    channel.assertQueue('', {
+    // createConfirmChannel
+    const channel = await connection.createChannel(); 
+
+    // Create exchange
+    var exchange = 'exchangeFilmURLs';
+    await channel.assertExchange(exchange, 'direct', { durable: true });
+
+    await channel.assertQueue('', {
         exclusive: true
-        }, function(error2, q) {
-            if (error2) {
-                throw error2;
-            }
+        }).then((q) => {
             console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q.queue);
             
             // Subscribing 
             args.forEach(function (severity) {
                 channel.bindQueue(q.queue, exchange, severity);
             });
-            channel.prefetch(1);
-            channel.consume(q.queue, function(msg) {
+            var queue = q.queue;
+            channel.consume(queue, function(msg) {
                 if (msg !== null) {
                     var url = msg.content.toString(); 
                     console.log(" Received: [%s] %s", msg.fields.routingKey, url);
                     request(url, crawler);
                 } 
             }, {
-                noAck: false,
+                noAck: true,
             });
-        });
+    }).catch((err) => {
+        throw err2;
     });
-});
+}
+
+receiver();

@@ -13,9 +13,9 @@ function crawler(error, response, html) {
           film.releaseDate = $('#titleYear').children('a').text().trim();
           film.rating = $('.ratingValue').children('strong').children('span').attr('itemprop', 'ratingValue').text().trim();
           if (film.title != '') {
-              var fileName = film.title.trim().replace(/[<>:;%\$\s]+/g, '-');
+              var title = film.title.trim().replace(/[<>:;%\$\s]+/g, '-');
               // write to JSON file
-              fs.writeFile(`filmList/${fileName}.json`, JSON.stringify(film) , function (err) {
+              fs.writeFile(`filmList/${title}.json`, JSON.stringify(film) , function (err) {
                 if (err) {
                     throw err; 
                 }
