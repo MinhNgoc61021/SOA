@@ -1,4 +1,3 @@
-var amqp = require('amqplib/callback_api');
 const { Connection } = require('amqplib-as-promised');
 const request = require('request');
 const cheerio = require('cheerio');
