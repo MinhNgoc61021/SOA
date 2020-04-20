@@ -13,7 +13,7 @@ async function sender() {
   const channel = await connection.createChannel(); 
     
   var args = process.argv.slice(2);
-    // severity is a routing key
+  // severity is a routing key
   var severity = (args.length > 0) ? args[0] : 'info';
 
   // Create exchange

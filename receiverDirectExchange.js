@@ -7,24 +7,23 @@ var args = process.argv.slice(2);
 
 // crawler to get data 
 function crawler(error, response, html) {
-      if (!error) {
-          let $ = cheerio.load(html);
-          var film = { title: '', releaseDate: '', rating: '' }
-          film.title = $('.title_wrapper').children('h1').text().trim();
-          film.releaseDate = $('#titleYear').children('a').text().trim();
-          film.rating = $('.ratingValue').children('strong').children('span').attr('itemprop', 'ratingValue').text().trim();
-          // console.log(film);
-          if (film.title != '') {
+    if (!error && response.statusCode === 200) {
+        let $ = cheerio.load(html);
+        var film = { title: '', releaseDate: '', rating: '' }
+        film.title = $('.title_wrapper').children('h1').text().trim();
+        film.releaseDate = $('#titleYear').children('a').text().trim();
+        film.rating = $('.ratingValue').children('strong').children('span').attr('itemprop', 'ratingValue').text().trim();
+        // console.log(film);
+        if (film.title != '') {
             var title = film.title.trim().replace(/[<>:;%\$\s]+/g, '-');
-
             fs.writeFile(`filmList/${title}.json`, JSON.stringify(film) , function (err) {
                 if (err) {
                     throw err; 
                 }
                 console.log('Crawled %s !', film.title.trim());
             });
-          }
-      }
+        }
+    }
 }
 
 if (args.length == 0) {
