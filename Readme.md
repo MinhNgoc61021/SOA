@@ -12,3 +12,4 @@
 - Cài Erlang -> RabbitMQ, sau đó chạy RabbitMQ
 - Tạo thư mục filmList trước
 - Với Default Exchange: Terminal -> Gõ node sender -> Gõ node receiver
+- Với Direct Exchange: Terminal -> Gõ node receiverDirectExchange info -> Gõ node receiverDirectExchange
