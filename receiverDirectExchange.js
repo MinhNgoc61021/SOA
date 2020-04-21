@@ -3,9 +3,7 @@ const request = require('request');
 const cheerio = require('cheerio');
 const fs = require('fs');
 
-var args = process.argv.slice(2);
-
-// crawler to get data 
+// crawler to get data
 function crawler(error, response, html) {
     if (!error && response.statusCode === 200) {
         let $ = cheerio.load(html);
@@ -18,17 +16,12 @@ function crawler(error, response, html) {
             var title = film.title.trim().replace(/[<>:;%\$\s]+/g, '-');
             fs.writeFile(`filmList/${title}.json`, JSON.stringify(film) , function (err) {
                 if (err) {
-                    throw err; 
+                    throw err;
                 }
                 console.log('Crawled %s !', film.title.trim());
             });
         }
     }
-}
-
-if (args.length == 0) {
-    console.log("Usage: receiverDirectExchange.js [info] [warning] [error]");
-    process.exit(1);
 }
 
 async function receiver() {
@@ -37,7 +30,7 @@ async function receiver() {
     await connection.init();
 
     // createConfirmChannel
-    const channel = await connection.createChannel(); 
+    const channel = await connection.createChannel();
 
     // Create exchange
     var exchange = 'exchangeFilmURLs';
@@ -47,20 +40,22 @@ async function receiver() {
         exclusive: true
         }).then((q) => {
             console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q.queue);
-            
-            // Subscribing 
-            args.forEach(function (severity) {
-                channel.bindQueue(q.queue, exchange, severity);
+
+            // Subscribing
+            var args = process.argv.slice(2);
+            args.forEach(function (routing_key) {
+                channel.bindQueue(q.queue, exchange, routing_key);
             });
             var queue = q.queue;
             channel.consume(queue, function(msg) {
                 if (msg !== null) {
-                    var url = msg.content.toString(); 
+                    var url = msg.content.toString();
                     console.log(" Received: [%s] %s", msg.fields.routingKey, url);
+                    channel.ack(msg);
                     request(url, crawler);
-                } 
+                }
             }, {
-                noAck: true,
+                noAck: false,
             });
     }).catch((err) => {
         throw err2;

@@ -3,7 +3,7 @@ const request = require('request');
 const cheerio = require('cheerio');
 const fs = require('fs');
 
-// crawler to get data 
+// crawler to get data
 function crawler(error, response, html) {
       if (!error) {
           // cheerio to get necessary data
@@ -17,7 +17,7 @@ function crawler(error, response, html) {
               // write to JSON file
               fs.writeFile(`filmList/${title}.json`, JSON.stringify(film) , function (err) {
                 if (err) {
-                    throw err; 
+                    throw err;
                 }
                 console.log('Crawled %s !', film.title.trim());
               });
@@ -30,21 +30,21 @@ async function receiver() {
     const connection = new Connection('amqp://localhost');
     await connection.init();
     // createConfirmChannel
-    const channel = await connection.createChannel(); 
+    const channel = await connection.createChannel();
 
      // Create queue
     var queue = 'filmQueue';
     await channel.assertQueue(queue, {durable: true});
 
-    // the prefetch(1) method tells Rabbit to not dispatch a new message to receiver until receive acknowledged the prev one.
-    channel.prefetch(1);
+    // the prefetch(1) method tells RabbitMQ to not dispatch a new message to receiver until receive acknowledged the prev one.
+    await channel.prefetch(1);
     console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", queue);
     await channel.consume(queue, function(msg) {
-                    var url = msg.content.toString(); 
+                    var url = msg.content.toString();
                     console.log("Received: ", url);
                     setTimeout(() => {
                         channel.ack(msg);
-                        console.log('Acked!');           
+                        console.log('Acked!');
                         request(url, crawler);
                     }, 1000);
                 }, { noAck: false });

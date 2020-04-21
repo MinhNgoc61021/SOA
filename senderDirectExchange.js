@@ -10,11 +10,11 @@ async function sender() {
   const connection = new Connection('amqp://localhost');
   await connection.init();
   // createConfirmChannel
-  const channel = await connection.createChannel(); 
-    
+  const channel = await connection.createChannel();
+
   var args = process.argv.slice(2);
-  // severity is a routing key
-  var severity = (args.length > 0) ? args[0] : 'info';
+  // routing key
+  var routing_key = (args.length > 0) ? args[0] : 'info';
 
   // Create exchange
   var exchange = 'exchangeFilmURLs';
@@ -22,8 +22,8 @@ async function sender() {
 
   for (var i = 0; i < 10; i++)  {
     var url= getMovieByIndex(i);
-    channel.publish(exchange, severity, Buffer.from(url));
-    console.log("Sent [%s]: '%s'", severity, url);
+    channel.publish(exchange, routing_key, Buffer.from(url));
+    console.log("Sent [%s]: '%s'", routing_key, url);
   }
   await channel.close();
   await connection.close();
