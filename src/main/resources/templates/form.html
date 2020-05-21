@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>BABABABA</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <form method="post" th:action="@{/result}" th:object="${sum}">
+            <label for="a">A:</label><br>
+            <input type="text" th:field="*{a}" id="a" name="a" value="0"><br>
+            <label for="b">b:</label><br>
+            <input type="text" th:field="*{b}" id="b" name="b" value="0"><br>
+            <label for="c">c:</label><br>
+            <input type="text" id="c" th:field="*{c}" name="c" value="0"><br>
+            <input type="submit" value="Tính">
+        </form>
+    </body>
+</html>
