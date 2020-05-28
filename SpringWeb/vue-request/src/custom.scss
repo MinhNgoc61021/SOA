@@ -1,0 +1,11 @@
+// custom.scss
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import 'node_modules/bootstrap-vue/src/index.scss';
+
+// Webpack example
+@import '~bootstrap';
+@import '~bootstrap-vue';
+
+// Parcel example
+@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap-vue/src/index.scss';
